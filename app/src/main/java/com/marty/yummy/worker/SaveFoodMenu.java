@@ -18,13 +18,16 @@ public class SaveFoodMenu extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        if(db!=null){
-            if(foodDetails!=null && foodDetails.size()>0) {
-                List<String> nameList = new ArrayList<>();
-                for(int i=0;i<foodDetails.size();i++){
-                    nameList.add(foodDetails.get(i).getName());
-                    foodDetails.get(i).setQuantity(db.cartItemDao().getCartCount(foodDetails.get(i).getName()));
-                }
+        if (db != null) {
+    if (foodDetails != null && !foodDetails.isEmpty()) {
+        List<String> nameList = new ArrayList<>();
+        for (FoodDetail foodDetail : foodDetails) {
+            nameList.add(foodDetail.getName());
+            foodDetail.setQuantity(db.cartItemDao().getCartCount(foodDetail.getName()));
+            }
+          }
+        }
+
                 db.foodDetailsDao().save(foodDetails);
                 db.foodDetailsDao().deleteOtherFoods(nameList);
             }else{
