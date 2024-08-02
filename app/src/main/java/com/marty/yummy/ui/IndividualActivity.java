@@ -106,27 +106,33 @@ public class IndividualActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id){
-            case R.id.i_minus:
-                if(duplicateFoodDetails.getQuantity()!=0) {
-                    duplicateFoodDetails.setQuantity(duplicateFoodDetails.getQuantity()-1);
-                    tQuantity.setText(String.valueOf(duplicateFoodDetails.getQuantity()));
-                }
-                foodDetailViewModel.updateCart(duplicateFoodDetails);
-                break;
-            case R.id.i_plus:
-                duplicateFoodDetails.setQuantity(duplicateFoodDetails.getQuantity()+1);
+public void onClick(View view) {
+    int id = view.getId();
+    switch (id) {
+        case R.id.i_minus:
+            if (duplicateFoodDetails.getQuantity() > 0) {
+                duplicateFoodDetails.setQuantity(duplicateFoodDetails.getQuantity() - 1);
                 tQuantity.setText(String.valueOf(duplicateFoodDetails.getQuantity()));
-                foodDetailViewModel.updateCart(duplicateFoodDetails);
-                break;
-            case R.id.b_cart:
-                startActivity(new Intent(this,CartActivity.class));
-                break;
+            }
+            foodDetailViewModel.updateCart(duplicateFoodDetails);
+            break;
+            
+        case R.id.i_plus:
+            duplicateFoodDetails.setQuantity(duplicateFoodDetails.getQuantity() + 1);
+            tQuantity.setText(String.valueOf(duplicateFoodDetails.getQuantity()));
+            foodDetailViewModel.updateCart(duplicateFoodDetails);
+            break;
+            
+        case R.id.b_cart:
+            startActivity(new Intent(this, CartActivity.class));
+            break;
 
-        }
+        default:
+            // Opcional: Manejar otros casos que no se han previsto
+            Log.e("onClick", "Unhandled view id: " + id);
+            break;
     }
+}
 
     private void updateCartUI(List<CartItem> cartItems) {
         if(cartItems!=null && cartItems.size()>0){
